@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Management System - Complete Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #f8fafc; }
+    .badge-active { background-color: #dcfce7; color: #166534; }
+    .badge-pending { background-color: #fef9c3; color: #854d0e; }
+    .badge-danger { background-color: #fee2e2; color: #991b1b; }
+    .badge-info { background-color: #e0f2fe; color: #075985; }
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.5); display: flex; align-items: center; justify-content: center; z-index: 50; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+  <!-- ==================== PAGE: LOGIN ==================== -->
+  <div id="page-login" class="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+      <div class="bg-slate-900 p-8 text-white text-center">
+        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3 font-bold text-xl shadow-lg">
+          EMS
+        </div>
+        <h2 class="text-xl font-bold tracking-tight">Employee Management System</h2>
+        <p class="text-xs text-slate-400 mt-1">Sign in to access your HR portal dashboard</p>
+      </div>
+
+      <div class="p-8">
+        <div id="login-alert" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium"></div>
+
+        <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Username / Email</label>
+            <div class="relative">
+              <i class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="text" id="login-username" required placeholder="Enter username" class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+              <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+            Sign In <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+
+        <div class="mt-4 text-center text-xs">
+          <span class="text-slate-500">Don't have an account? </span>
+          <button onclick="navigateTo('register')" class="text-blue-700 font-bold hover:underline">Create New Account</button>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-slate-100">
+          <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center mb-3">Quick Role Logins</p>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <button onclick="quickLogin('admin', 'Admin')" class="p-2 bg-slate-50 hover:bg-slate-100 border rounded text-left font-medium text-slate-700">
+              <span class="block font-bold text-blue-800">Admin</span>
+              <span class="text-[10px] text-slate-500">Full Access</span>
+            </button>
+            <button onclick="quickLogin('hr_manager', 'HR Manager')" class="p-2 bg-slate-50 hover:bg-slate-100 border rounded text-left font-medium text-slate-700">
+              <span class="block font-bold text-blue-800">HR Manager</span>
+              <span class="text-[10px] text-slate-500">HR Operations</span>
+            </button>
+            <button onclick="quickLogin('dept_manager', 'Dept Manager')" class="p-2 bg-slate-50 hover:bg-slate-100 border rounded text-left font-medium text-slate-700">
+              <span class="block font-bold text-blue-800">Dept Manager</span>
+              <span class="text-[10px] text-slate-500">Team Review</span>
+            </button>
+            <button onclick="quickLogin('payroll_officer', 'Payroll Officer')" class="p-2 bg-slate-50 hover:bg-slate-100 border rounded text-left font-medium text-slate-700">
+              <span class="block font-bold text-blue-800">Payroll Officer</span>
+              <span class="text-[10px] text-slate-500">Salaries & Tax</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE: REGISTER ==================== -->
+  <div id="page-register" class="min-h-screen bg-slate-100 flex items-center justify-center p-4 hidden">
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden">
+      <div class="bg-slate-900 p-6 text-white text-center">
+        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-2 font-bold text-xl shadow-lg">
+          EMS
+        </div>
+        <h2 class="text-xl font-bold tracking-tight">Create an Account</h2>
+        <p class="text-xs text-slate-400 mt-1">Register for the Employee Management System</p>
+      </div>
+
+      <div class="p-6">
+        <div id="register-success" class="hidden mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs rounded-lg font-medium">
+          Account created successfully! Redirecting to login...
+        </div>
+
+        <form onsubmit="handleRegisterSubmit(event)" class="space-y-3 text-xs">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">First Name</label>
+              <input type="text" id="reg-fname" required placeholder="John" class="w-full p-2 border rounded-lg">
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Last Name</label>
+              <input type="text" id="reg-lname" required placeholder="Doe" class="w-full p-2 border rounded-lg">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Username *</label>
+            <input type="text" id="reg-username" required placeholder="johndoe" class="w-full p-2 border rounded-lg">
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Email Address *</label>
+            <input type="email" id="reg-email" required placeholder="john.doe@company.com" class="w-full p-2 border rounded-lg">
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Role *</label>
+              <select id="reg-role" class="w-full p-2 border rounded-lg bg-white">
+                <option value="Employee">Employee</option>
+                <option value="Dept Manager">Department Manager</option>
+                <option value="HR Manager">HR Manager</option>
+                <option value="Payroll Officer">Payroll Officer</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">Phone Number</label>
+              <input type="text" id="reg-phone" placeholder="+1-555-0199" class="w-full p-2 border rounded-lg">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Password *</label>
+            <input type="password" id="reg-password" required placeholder="••••••••" class="w-full p-2 border rounded-lg">
+          </div>
+
+          <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2 mt-4">
+            Register Account <i class="fa-solid fa-user-plus text-xs"></i>
+          </button>
+        </form>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 text-center text-xs">
+          <span class="text-slate-500">Already have an account? </span>
+          <button onclick="navigateTo('login')" class="text-blue-700 font-bold hover:underline">Sign In Here</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE: LOGOUT ==================== -->
+  <div id="page-logout" class="min-h-screen bg-slate-100 flex items-center justify-center p-4 hidden">
+    <div class="max-w-sm w-full bg-white rounded-2xl shadow-xl border border-slate-200 p-8 text-center space-y-4">
+      <div class="w-16 h-16 bg-blue-50 text-blue-700 rounded-full flex items-center justify-center mx-auto text-2xl">
+        <i class="fa-solid fa-circle-check text-3xl"></i>
+      </div>
+      <h2 class="text-xl font-bold text-slate-800">You Have Signed Out</h2>
+      <p class="text-xs text-slate-500">
+        Your session has been securely ended. Thank you for using the Employee Management System.
+      </p>
+
+      <div class="pt-4 border-t border-slate-100">
+        <button onclick="navigateTo('login')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+          Sign In Again <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN DASHBOARD LAYOUT ==================== -->
+  <div id="page-app" class="flex min-h-screen hidden">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0 min-h-screen">
+      <div class="p-4 border-b border-slate-800 flex items-center gap-3">
+        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+          EMS
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-white">ENTERPRISE</h1>
+          <p class="text-[10px] text-slate-400">HR Operations Portal</p>
+        </div>
+      </div>
+
+      <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-white bg-blue-600">
+          <i class="fa-solid fa-chart-line w-4"></i> Executive Dashboard
+        </button>
+        <button onclick="switchTab('employees')" id="nav-employees" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-users w-4"></i> Employees Directory
+        </button>
+        <button onclick="switchTab('departments')" id="nav-departments" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-building w-4"></i> Departments & Positions
+        </button>
+        <button onclick="switchTab('attendance')" id="nav-attendance" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-calendar-check w-4"></i> Attendance Logs
+        </button>
+        <button onclick="switchTab('leaves')" id="nav-leaves" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-file-lines w-4"></i> Leave Requests
+        </button>
+        <button onclick="switchTab('payroll')" id="nav-payroll" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-money-bill-wave w-4"></i> Payroll & Payslips
+        </button>
+        <button onclick="switchTab('performance')" id="nav-performance" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-award w-4"></i> Performance Reviews
+        </button>
+        <button onclick="switchTab('reports')" id="nav-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white">
+          <i class="fa-solid fa-chart-pie w-4"></i> Reports & Analytics
+        </button>
+      </nav>
+
+      <div class="p-4 border-t border-slate-800 text-[10px] text-slate-500 text-center">
+        Employee Management System &copy; 2026
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <!-- Navbar -->
+      <header class="bg-white border-b border-slate-200 px-6 py-3.5 flex items-center justify-between sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+          <h2 class="text-lg font-bold text-slate-800">Employee Management System</h2>
+          <span class="text-[10px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded border border-blue-200">SOP v1.0 Live</span>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="text-xs text-right">
+            <span class="block font-bold text-slate-800" id="current-user-name">Admin User</span>
+            <span class="text-[10px] text-blue-600 font-semibold" id="current-user-role">Role: Admin</span>
+          </div>
+          <button onclick="performLogout()" class="bg-red-50 hover:bg-red-100 text-red-700 text-xs px-3 py-1.5 rounded-lg font-semibold border border-red-200 flex items-center gap-1.5">
+            <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <main class="p-6 max-w-7xl mx-auto w-full space-y-6">
+
+        <!-- TAB: DASHBOARD -->
+        <div id="tab-dashboard" class="space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Executive Dashboard</h1>
+              <p class="text-xs text-slate-500">Real-time organizational analytics and workforce metrics</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-users"></i></div>
+              <div>
+                <p class="text-xs font-semibold text-slate-500">Total Employees</p>
+                <h3 class="text-xl font-extrabold text-slate-800" id="dash-total-emp">5</h3>
+                <p class="text-[10px] text-emerald-600 font-medium">5 Active Staff</p>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-building"></i></div>
+              <div>
+                <p class="text-xs font-semibold text-slate-500">Departments</p>
+                <h3 class="text-xl font-extrabold text-slate-800">4</h3>
+                <p class="text-[10px] text-slate-400">Operational Units</p>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-calendar-check"></i></div>
+              <div>
+                <p class="text-xs font-semibold text-slate-500">Today's Attendance</p>
+                <h3 class="text-xl font-extrabold text-slate-800">4 Present</h3>
+                <p class="text-[10px] text-amber-600 font-medium">1 Late Log</p>
+              </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-file-lines"></i></div>
+              <div>
+                <p class="text-xs font-semibold text-slate-500">Pending Leaves</p>
+                <h3 class="text-xl font-extrabold text-slate-800" id="dash-pending-leaves">1</h3>
+                <p class="text-[10px] text-amber-600 font-medium">Awaiting Review</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-sm font-bold text-slate-800 mb-4">Workforce Headcount by Department</h3>
+              <canvas id="deptChart" class="max-h-60"></canvas>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-sm font-bold text-slate-800 mb-4">Employee Status Breakdown</h3>
+              <canvas id="statusChart" class="max-h-60"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: EMPLOYEES -->
+        <div id="tab-employees" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Employee Directory</h1>
+              <p class="text-xs text-slate-500">Manage organizational staff profiles and CRUD records</p>
+            </div>
+            <button onclick="openEmployeeModal()" class="bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-2">
+              <i class="fa-solid fa-plus"></i> Add Employee
+            </button>
+          </div>
+
+          <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row gap-3">
+            <input type="text" id="emp-search" onkeyup="filterEmployees()" placeholder="Search by name, email, department..." class="flex-1 border border-slate-300 rounded-lg text-xs p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select id="emp-dept-filter" onchange="filterEmployees()" class="border border-slate-300 rounded-lg text-xs p-2 bg-white">
+              <option value="">All Departments</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Human Resources">Human Resources</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl overflow-x-auto shadow-sm">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead class="bg-slate-100 text-slate-600 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Employee ID</th>
+                  <th class="p-3">Name & Email</th>
+                  <th class="p-3">Department</th>
+                  <th class="p-3">Position</th>
+                  <th class="p-3">Type</th>
+                  <th class="p-3">Salary ($)</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="employee-table-body">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: DEPARTMENTS -->
+        <div id="tab-departments" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Departments</h1>
+              <p class="text-xs text-slate-500">Organizational units and department structures</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="w-8 h-8 rounded bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs mb-2">IT</div>
+              <h3 class="font-bold text-slate-800 text-sm">Information Technology</h3>
+              <p class="text-xs text-slate-500 mt-1">2 Employees</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-xs mb-2">HR</div>
+              <h3 class="font-bold text-slate-800 text-sm">Human Resources</h3>
+              <p class="text-xs text-slate-500 mt-1">1 Employee</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs mb-2">FIN</div>
+              <h3 class="font-bold text-slate-800 text-sm">Finance</h3>
+              <p class="text-xs text-slate-500 mt-1">1 Employee</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div class="w-8 h-8 rounded bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs mb-2">MKT</div>
+              <h3 class="font-bold text-slate-800 text-sm">Marketing</h3>
+              <p class="text-xs text-slate-500 mt-1">1 Employee</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: ATTENDANCE -->
+        <div id="tab-attendance" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Attendance Tracking</h1>
+              <p class="text-xs text-slate-500">Daily check-in logs and working hours</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl overflow-x-auto shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Date</th>
+                  <th class="p-3">Employee</th>
+                  <th class="p-3">Check In</th>
+                  <th class="p-3">Check Out</th>
+                  <th class="p-3">Working Hours</th>
+                  <th class="p-3">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="p-3 font-semibold">2026-09-16</td>
+                  <td class="p-3 font-bold">Arun Kumar (EMP1001)</td>
+                  <td class="p-3">09:00 AM</td>
+                  <td class="p-3">05:30 PM</td>
+                  <td class="p-3 font-medium">8.5 hrs</td>
+                  <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold badge-active">Present</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">2026-09-16</td>
+                  <td class="p-3 font-bold">Priya Devi (EMP1002)</td>
+                  <td class="p-3">09:15 AM</td>
+                  <td class="p-3">05:15 PM</td>
+                  <td class="p-3 font-medium">8.0 hrs</td>
+                  <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold badge-active">Present</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: LEAVES -->
+        <div id="tab-leaves" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Leave Management</h1>
+              <p class="text-xs text-slate-500">Leave applications and manager workflow approvals</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl overflow-x-auto shadow-sm">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-600 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Employee</th>
+                  <th class="p-3">Leave Type</th>
+                  <th class="p-3">Dates</th>
+                  <th class="p-3">Reason</th>
+                  <th class="p-3">Status</th>
+                  <th class="p-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="leave-table-body" class="divide-y divide-slate-100">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB: PAYROLL -->
+        <div id="tab-payroll" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Payroll & Payslips</h1>
+              <p class="text-xs text-slate-500">Monthly salary computation and printable payslips</p>
+            </div>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-xl overflow-x-auto shadow-sm p-4">
+            <div class="border-b border-slate-200 pb-4 mb-4 flex justify-between items-center">
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm">GLOBAL HR ENTERPRISES</h3>
+                <p class="text-xs text-slate-500">Official Monthly Payslip Statement (September 2026)</p>
+              </div>
+              <button onclick="window.print()" class="bg-blue-700 text-white text-xs px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-print"></i> Print Payslip</button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-xs bg-slate-50 p-3 rounded mb-4">
+              <div><span class="text-slate-500">Employee Name:</span> <strong class="text-slate-900 block">Arun Kumar (EMP1001)</strong></div>
+              <div><span class="text-slate-500">Department:</span> <strong class="text-slate-900 block">Information Technology</strong></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              <div class="border p-3 rounded">
+                <h4 class="font-bold text-emerald-800 border-b pb-1 mb-2">Earnings</h4>
+                <div class="flex justify-between py-1"><span>Basic Salary</span> <span>$7,083.33</span></div>
+                <div class="flex justify-between py-1"><span>Allowances</span> <span>$500.00</span></div>
+                <div class="flex justify-between py-1"><span>Bonus</span> <span>$300.00</span></div>
+              </div>
+              <div class="border p-3 rounded">
+                <h4 class="font-bold text-red-800 border-b pb-1 mb-2">Deductions</h4>
+                <div class="flex justify-between py-1"><span>Tax</span> <span class="text-red-600">-$1,000.00</span></div>
+                <div class="flex justify-between py-1"><span>Other</span> <span class="text-red-600">-$200.00</span></div>
+              </div>
+            </div>
+            <div class="bg-slate-900 text-white p-3 rounded mt-4 flex justify-between items-center text-xs">
+              <span>Total Net Salary Payable:</span>
+              <span class="text-lg font-bold text-emerald-400">$6,683.33</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: PERFORMANCE -->
+        <div id="tab-performance" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Performance Reviews</h1>
+              <p class="text-xs text-slate-500">Employee evaluations and ratings</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+              <div class="flex justify-between border-b pb-2">
+                <h3 class="font-bold text-sm">Arun Kumar (EMP1001)</h3>
+                <span class="text-amber-500 font-bold text-xs"><i class="fa-solid fa-star"></i> 4.5 / 5.0</span>
+              </div>
+              <p class="text-xs text-slate-600"><strong>Period:</strong> Q2 2026</p>
+              <p class="text-xs text-slate-600"><strong>Strengths:</strong> Exceptional code quality and architecture skills.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: REPORTS -->
+        <div id="tab-reports" class="space-y-4 hidden">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-xl font-bold text-slate-800">Reports & Export</h1>
+              <p class="text-xs text-slate-500">Export database reports to CSV</p>
+            </div>
+            <button onclick="exportCSV()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-3 py-2 rounded-lg flex items-center gap-2">
+              <i class="fa-solid fa-download"></i> Export Employee CSV
+            </button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Employee Modal -->
+  <div id="empModal" class="modal-overlay hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+      <h3 class="text-base font-bold text-slate-800">Add New Employee</h3>
+      <form onsubmit="saveEmployee(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Employee ID</label>
+          <input type="text" id="m-empid" required value="EMP1006" class="w-full p-2 border rounded">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold mb-1">First Name</label>
+            <input type="text" id="m-fname" required class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Last Name</label>
+            <input type="text" id="m-lname" required class="w-full p-2 border rounded">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Email</label>
+          <input type="email" id="m-email" required class="w-full p-2 border rounded">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold mb-1">Department</label>
+            <select id="m-dept" class="w-full p-2 border rounded bg-white">
+              <option value="Information Technology">Information Technology</option>
+              <option value="Human Resources">Human Resources</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Position</label>
+            <input type="text" id="m-pos" value="Software Engineer" class="w-full p-2 border rounded">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Salary ($)</label>
+          <input type="number" id="m-salary" value="70000" class="w-full p-2 border rounded">
+        </div>
+        <div class="flex justify-end gap-2 pt-2 border-t">
+          <button type="button" onclick="closeEmployeeModal()" class="px-3 py-1.5 border rounded">Cancel</button>
+          <button type="submit" class="px-3 py-1.5 bg-blue-700 text-white rounded font-semibold">Save Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+
+    let employees = [
+      { id: 1, emp_id: 'EMP1001', name: 'Arun Kumar', email: 'arun.kumar@company.com', dept: 'Information Technology', pos: 'Software Developer', type: 'Full Time', salary: 85000, status: 'Active' },
+      { id: 2, emp_id: 'EMP1002', name: 'Priya Devi', email: 'hr@company.com', dept: 'Human Resources', pos: 'HR Executive', type: 'Full Time', salary: 68000, status: 'Active' },
+      { id: 3, emp_id: 'EMP1003', name: 'Karthik Raj', email: 'payroll@company.com', dept: 'Finance', pos: 'Accountant', type: 'Full Time', salary: 75000, status: 'Active' },
+      { id: 4, emp_id: 'EMP1004', name: 'Ananya Sharma', email: 'ananya.sharma@company.com', dept: 'Marketing', pos: 'Marketing Specialist', type: 'Contract', salary: 58000, status: 'Active' },
+      { id: 5, emp_id: 'EMP1005', name: 'Rahul Verma', email: 'rahul.verma@company.com', dept: 'Information Technology', pos: 'Software Developer', type: 'Full Time', salary: 82000, status: 'Active' }
+    ];
+
+    let leaves = [
+      { id: 1, emp: 'Arun Kumar (EMP1001)', type: 'Casual Leave', dates: '2026-10-01 to 2026-10-03', reason: 'Family event in hometown.', status: 'Pending' },
+      { id: 2, emp: 'Ananya Sharma (EMP1004)', type: 'Sick Leave', dates: '2026-09-05 to 2026-09-06', reason: 'Viral fever', status: 'Approved' }
+    ];
+
+    function navigateTo(page) {
+      ['login', 'register', 'logout', 'app'].forEach(p => {
+        document.getElementById(`page-${p}`).classList.add('hidden');
+      });
+      document.getElementById(`page-${page}`).classList.remove('hidden');
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const u = document.getElementById('login-username').value;
+      currentUser = { name: u || 'Admin User', role: 'Admin' };
+      loginSuccess();
+    }
+
+    function quickLogin(username, role) {
+      currentUser = { name: username, role: role };
+      loginSuccess();
+    }
+
+    function loginSuccess() {
+      document.getElementById('current-user-name').innerText = currentUser.name;
+      document.getElementById('current-user-role').innerText = 'Role: ' + currentUser.role;
+      navigateTo('app');
+      initCharts();
+    }
+
+    function handleRegisterSubmit(e) {
+      e.preventDefault();
+      document.getElementById('register-success').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('register-success').classList.add('hidden');
+        navigateTo('login');
+      }, 1500);
+    }
+
+    function performLogout() {
+      currentUser = null;
+      navigateTo('logout');
+    }
+
+    function renderEmployees() {
+      const tbody = document.getElementById('employee-table-body');
+      tbody.innerHTML = employees.map(e => `
+        <tr class="hover:bg-slate-50 border-b">
+          <td class="p-3 font-semibold text-slate-800">${e.emp_id}</td>
+          <td class="p-3">
+            <div class="font-bold text-slate-900">${e.name}</div>
+            <div class="text-[10px] text-slate-500">${e.email}</div>
+          </td>
+          <td class="p-3">${e.dept}</td>
+          <td class="p-3">${e.pos}</td>
+          <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 border rounded text-[10px]">${e.type}</span></td>
+          <td class="p-3 font-semibold text-emerald-700">$${e.salary.toLocaleString()}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold badge-active">${e.status}</span></td>
+          <td class="p-3 text-right">
+            <button onclick="deleteEmployee(${e.id})" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+      document.getElementById('dash-total-emp').innerText = employees.length;
+    }
+
+    function renderLeaves() {
+      const tbody = document.getElementById('leave-table-body');
+      tbody.innerHTML = leaves.map(l => `
+        <tr>
+          <td class="p-3 font-bold">${l.emp}</td>
+          <td class="p-3">${l.type}</td>
+          <td class="p-3">${l.dates}</td>
+          <td class="p-3 text-slate-500">${l.reason}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${l.status === 'Approved' ? 'badge-active' : 'badge-pending'}">${l.status}</span></td>
+          <td class="p-3 text-right">
+            ${l.status === 'Pending' ? `
+              <button onclick="updateLeave(${l.id}, 'Approved')" class="text-emerald-600 font-bold mr-2"><i class="fa-solid fa-check"></i> Approve</button>
+              <button onclick="updateLeave(${l.id}, 'Rejected')" class="text-red-600 font-bold"><i class="fa-solid fa-xmark"></i> Reject</button>
+            ` : ''}
+          </td>
+        </tr>
+      `).join('');
+      const pendingCount = leaves.filter(l => l.status === 'Pending').length;
+      document.getElementById('dash-pending-leaves').innerText = pendingCount;
+    }
+
+    function filterEmployees() {
+      const query = document.getElementById('emp-search').value.toLowerCase();
+      const dept = document.getElementById('emp-dept-filter').value;
+      const tbody = document.getElementById('employee-table-body');
+
+      const filtered = employees.filter(e => {
+        const matchesQuery = e.name.toLowerCase().includes(query) || e.email.toLowerCase().includes(query) || e.emp_id.toLowerCase().includes(query);
+        const matchesDept = !dept || e.dept === dept;
+        return matchesQuery && matchesDept;
+      });
+
+      tbody.innerHTML = filtered.map(e => `
+        <tr class="hover:bg-slate-50 border-b">
+          <td class="p-3 font-semibold text-slate-800">${e.emp_id}</td>
+          <td class="p-3">
+            <div class="font-bold text-slate-900">${e.name}</div>
+            <div class="text-[10px] text-slate-500">${e.email}</div>
+          </td>
+          <td class="p-3">${e.dept}</td>
+          <td class="p-3">${e.pos}</td>
+          <td class="p-3"><span class="px-2 py-0.5 bg-slate-100 border rounded text-[10px]">${e.type}</span></td>
+          <td class="p-3 font-semibold text-emerald-700">$${e.salary.toLocaleString()}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold badge-active">${e.status}</span></td>
+          <td class="p-3 text-right">
+            <button onclick="deleteEmployee(${e.id})" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openEmployeeModal() { document.getElementById('empModal').classList.remove('hidden'); }
+    function closeEmployeeModal() { document.getElementById('empModal').classList.add('hidden'); }
+
+    function saveEmployee(e) {
+      e.preventDefault();
+      const newEmp = {
+        id: Date.now(),
+        emp_id: document.getElementById('m-empid').value,
+        name: document.getElementById('m-fname').value + ' ' + document.getElementById('m-lname').value,
+        email: document.getElementById('m-email').value,
+        dept: document.getElementById('m-dept').value,
+        pos: document.getElementById('m-pos').value,
+        type: 'Full Time',
+        salary: Number(document.getElementById('m-salary').value),
+        status: 'Active'
+      };
+      employees.push(newEmp);
+      renderEmployees();
+      closeEmployeeModal();
+    }
+
+    function deleteEmployee(id) {
+      if (confirm('Are you sure you want to delete this employee?')) {
+        employees = employees.filter(e => e.id !== id);
+        renderEmployees();
+      }
+    }
+
+    function updateLeave(id, status) {
+      const l = leaves.find(item => item.id === id);
+      if (l) {
+        l.status = status;
+        renderLeaves();
+      }
+    }
+
+    function switchTab(tab) {
+      ['dashboard', 'employees', 'departments', 'attendance', 'leaves', 'payroll', 'performance', 'reports'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`nav-${t}`).classList.remove('bg-blue-600', 'text-white');
+        document.getElementById(`nav-${t}`).classList.add('text-slate-400');
+      });
+
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`nav-${tab}`).classList.add('bg-blue-600', 'text-white');
+      document.getElementById(`nav-${tab}`).classList.remove('text-slate-400');
+    }
+
+    function exportCSV() {
+      const headers = ['ID', 'Employee ID', 'Name', 'Email', 'Department', 'Position', 'Salary', 'Status'];
+      const rows = employees.map(e => [e.id, e.emp_id, e.name, e.email, e.dept, e.pos, e.salary, e.status]);
+      let csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', 'employees_export.csv');
+      document.body.appendChild(link);
+      link.click();
+    }
+
+    let chart1 = null, chart2 = null;
+    function initCharts() {
+      renderEmployees();
+      renderLeaves();
+
+      if (chart1) chart1.destroy();
+      if (chart2) chart2.destroy();
+
+      const ctx1 = document.getElementById('deptChart').getContext('2d');
+      chart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['IT', 'HR', 'Finance', 'Marketing'],
+          datasets: [{ label: 'Staff Count', data: [2, 1, 1, 1], backgroundColor: '#1e40af' }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+
+      const ctx2 = document.getElementById('statusChart').getContext('2d');
+      chart2 = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: ['Active', 'On Leave'],
+          datasets: [{ data: [5, 0], backgroundColor: ['#10b981', '#f59e0b'] }]
+        },
+        options: { responsive: true }
+      });
+    }
+
+    window.onload = function() {
+      navigateTo('login');
+    };
+  </script>
+</body>
+</html>

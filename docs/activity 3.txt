@@ -1,0 +1,1229 @@
+MASTER PROMPT — EMPLOYEE MANAGEMENT SYSTEM
+1. PROJECT TITLE
+Build a complete full-stack web application named:
+“Employee Management System”
+This project is an academic CRUD-based web application developed according to the provided Standard Operating Procedure (SOP) — Complete CRUD-Based Web Application Development.
+The application must demonstrate:
+    • Create
+    • Read
+    • Update
+    • Delete
+    • Database integration
+    • REST API
+    • Frontend-backend integration
+    • Input validation
+    • Error handling
+    • Search and filtering
+    • Authentication
+    • Role-based access
+    • Testing
+    • Documentation
+    • Responsive UI
+Do NOT build only a frontend design or static prototype.
+The application must be genuinely functional.
+
+2. MAIN OBJECTIVE
+Develop a modern Employee Management System that allows an organization to digitally manage employee information.
+The system should allow authorized users to:
+    • Add employees
+    • View employees
+    • Edit employees
+    • Delete employees
+    • Search employees
+    • Filter employees
+    • View employee details
+    • Manage departments
+    • Manage job positions
+    • Manage employee attendance
+    • Manage leave requests
+    • Manage salary/payroll information
+    • View reports
+    • Manage notifications
+The application must store all important information in a real database.
+
+3. REQUIRED TECHNOLOGY STACK
+Use the following technology stack:
+Frontend
+    • React.js
+    • JavaScript
+    • HTML5
+    • CSS3
+    • React Router
+    • Axios or Fetch API
+    • Responsive design
+Backend
+    • Python
+    • Django
+    • Django REST Framework
+Database
+    • SQLite
+Use Django ORM for database operations.
+Charts
+Use Recharts or Chart.js.
+Icons
+Use Lucide React.
+API Testing
+Use Postman-compatible REST APIs.
+Version Control
+Prepare the project structure so it is Git/GitHub ready.
+
+4. REQUIRED ARCHITECTURE
+Implement the following architecture:
+User
+?
+React Frontend
+?
+Axios / Fetch API
+?
+Django REST Framework REST API
+?
+Django Serializers
+?
+Django Business Logic
+?
+Django ORM
+?
+SQLite Database
+?
+JSON Response
+?
+React UI Update
+All CRUD operations must follow this architecture.
+Do not bypass the backend and directly manipulate the database from React.
+Do not use localStorage as the primary database.
+Do not use hard-coded arrays as the main source of application data.
+
+5. USER ROLES
+Implement authentication and role-based authorization.
+Create these roles:
+1. Admin
+Can manage the entire system.
+Permissions:
+    • Manage employees
+    • Manage departments
+    • Manage positions
+    • Manage attendance
+    • Manage leave
+    • Manage payroll
+    • Manage users
+    • View reports
+    • Manage notifications
+2. HR Manager
+Permissions:
+    • Add employees
+    • View employees
+    • Edit employees
+    • Manage departments
+    • Manage positions
+    • Manage attendance
+    • Manage leave requests
+    • View reports
+    • Manage employee performance
+3. Department Manager
+Permissions:
+    • View employees in their department
+    • View attendance
+    • Review leave requests
+    • View employee performance
+    • View department reports
+4. Payroll Officer
+Permissions:
+    • View employees
+    • Manage salary information
+    • Create payroll records
+    • Update payroll records
+    • Generate payslips
+    • View payroll reports
+5. Employee
+Employees can:
+    • View their own profile
+    • Update permitted profile information
+    • View their attendance
+    • Apply for leave
+    • View leave status
+    • View salary
+    • View payslips
+    • View performance records
+    • View notifications
+Do not give every role full access.
+Backend authorization must also be implemented.
+
+6. EMPLOYEE MODULE
+Create the main Employee Management module.
+Employee fields:
+    • Employee ID
+    • Full Name
+    • Email
+    • Phone Number
+    • Gender
+    • Date of Birth
+    • Address
+    • Department
+    • Job Position
+    • Joining Date
+    • Employment Type
+    • Salary
+    • Manager
+    • Emergency Contact Name
+    • Emergency Contact Phone
+    • Profile Photo
+    • Employee Status
+    • Created Date
+    • Updated Date
+Employment types:
+    • Full Time
+    • Part Time
+    • Contract
+    • Intern
+Employee status:
+    • Active
+    • On Leave
+    • Resigned
+    • Terminated
+    • Retired
+Implement complete CRUD.
+CREATE
+Provide an Add Employee form.
+When the user clicks:
+Add Employee
+the application must:
+React Form
+? Validation
+? POST /api/employees/
+? Django REST Framework
+? Serializer
+? Django ORM
+? SQLite
+? JSON Response
+? Refresh Employee List
+READ
+Display employees in a professional table.
+Columns:
+    • Employee ID
+    • Name
+    • Email
+    • Department
+    • Position
+    • Joining Date
+    • Status
+    • Actions
+Actions:
+    • View
+    • Edit
+    • Delete
+UPDATE
+Edit employee information using a form/modal/page.
+Use:
+PATCH /api/employees/{id}/
+After successful update:
+    • Update database
+    • Show success message
+    • Refresh UI
+DELETE
+Delete an employee only when the logged-in role has permission.
+Before deleting:
+Show confirmation dialog:
+“Are you sure you want to delete this employee?”
+After confirmation:
+DELETE /api/employees/{id}/
+Remove the record from SQLite and refresh the UI.
+
+7. EMPLOYEE DETAILS PAGE
+Create a professional employee profile/details page.
+Display:
+Personal Information
+    • Profile photo
+    • Employee ID
+    • Full Name
+    • Email
+    • Phone
+    • Gender
+    • Date of Birth
+    • Address
+Employment Information
+    • Department
+    • Job Position
+    • Joining Date
+    • Employment Type
+    • Manager
+    • Employee Status
+Additional Information
+    • Emergency Contact
+    • Attendance summary
+    • Leave summary
+    • Salary summary
+    • Performance summary
+Use cards and sections instead of displaying everything as plain text.
+
+8. DEPARTMENT MANAGEMENT
+Create a Department module.
+Department fields:
+    • Department ID
+    • Department Name
+    • Department Code
+    • Description
+    • Manager
+    • Status
+    • Created Date
+    • Updated Date
+Example departments:
+    • Human Resources
+    • Information Technology
+    • Finance
+    • Marketing
+    • Sales
+    • Operations
+    • Electronics
+    • Administration
+Implement:
+    • Create
+    • Read
+    • Update
+    • Delete
+Department data must come from SQLite.
+Do not hard-code department data as the main source.
+
+9. JOB POSITION MANAGEMENT
+Create a Job Position module.
+Fields:
+    • Position ID
+    • Position Name
+    • Department
+    • Description
+    • Minimum Salary
+    • Maximum Salary
+    • Required Experience
+    • Status
+Examples:
+    • Software Developer
+    • HR Executive
+    • Accountant
+    • Electronics Engineer
+    • Marketing Executive
+    • Sales Executive
+    • Team Leader
+    • Project Manager
+Implement complete CRUD.
+
+10. ATTENDANCE MANAGEMENT
+Create an Attendance module.
+Fields:
+    • Attendance ID
+    • Employee
+    • Date
+    • Check-in Time
+    • Check-out Time
+    • Working Hours
+    • Attendance Status
+    • Remarks
+Statuses:
+    • Present
+    • Absent
+    • Late
+    • Half Day
+    • Work From Home
+    • Holiday
+Implement:
+    • Add attendance
+    • View attendance
+    • Update attendance
+    • Delete attendance
+    • Search attendance
+    • Filter attendance
+Prevent duplicate attendance records for the same employee on the same date.
+
+11. LEAVE MANAGEMENT
+Create a Leave Management module.
+Leave fields:
+    • Leave ID
+    • Employee
+    • Leave Type
+    • Start Date
+    • End Date
+    • Number of Days
+    • Reason
+    • Applied Date
+    • Approved By
+    • Status
+    • Remarks
+Leave types:
+    • Casual Leave
+    • Sick Leave
+    • Earned Leave
+    • Emergency Leave
+    • Maternity Leave
+    • Paternity Leave
+    • Unpaid Leave
+Leave status:
+    • Pending
+    • Approved
+    • Rejected
+    • Cancelled
+Workflow:
+Employee
+?
+Apply Leave
+?
+Database
+?
+HR/Manager Notification
+?
+Review Request
+?
+Approve / Reject
+?
+Database Update
+?
+Employee Notification
+
+12. PAYROLL MANAGEMENT
+Create a Payroll Management module.
+Payroll fields:
+    • Payroll ID
+    • Employee
+    • Month
+    • Year
+    • Basic Salary
+    • Allowances
+    • Bonus
+    • Overtime
+    • Tax
+    • Deductions
+    • Net Salary
+    • Payment Date
+    • Payment Status
+Payment statuses:
+    • Pending
+    • Processed
+    • Paid
+    • Cancelled
+Calculate:
+Net Salary = Basic Salary + Allowances + Bonus + Overtime - Tax - Deductions
+The calculation must be performed using backend logic.
+Do not rely only on frontend calculations.
+
+13. PAYSLIP
+Create a payslip page.
+Display:
+    • Company name
+    • Employee name
+    • Employee ID
+    • Department
+    • Position
+    • Salary month
+    • Basic salary
+    • Allowances
+    • Bonus
+    • Overtime
+    • Tax
+    • Deductions
+    • Net salary
+    • Payment status
+Employees can view their own payslips.
+Payroll officers can manage payslips.
+Provide a print/download-friendly payslip layout if practical.
+
+14. PERFORMANCE MANAGEMENT
+Create an Employee Performance module.
+Fields:
+    • Performance ID
+    • Employee
+    • Review Period
+    • Reviewer
+    • Productivity Rating
+    • Quality Rating
+    • Teamwork Rating
+    • Communication Rating
+    • Overall Rating
+    • Strengths
+    • Areas for Improvement
+    • Comments
+    • Review Date
+Rating scale:
+1 — Poor
+2 — Needs Improvement
+3 — Good
+4 — Very Good
+5 — Excellent
+Managers and HR can create performance reviews.
+Employees can view their own permitted performance information.
+
+15. EMPLOYEE DASHBOARD
+Create a personalized employee dashboard.
+Display:
+    • Welcome message
+    • Employee name
+    • Employee ID
+    • Department
+    • Job position
+    • Attendance summary
+    • Leave summary
+    • Pending leave requests
+    • Latest payslip
+    • Salary information
+    • Performance rating
+    • Notifications
+Dashboard cards:
+Attendance
+Leave Balance
+Pending Requests
+Latest Salary
+Performance
+Quick actions:
+    • View Profile
+    • Apply Leave
+    • View Attendance
+    • View Payslip
+    • View Performance
+
+16. ADMIN DASHBOARD
+Create a professional admin dashboard.
+Dashboard cards:
+    • Total Employees
+    • Active Employees
+    • Employees on Leave
+    • Total Departments
+    • Pending Leave Requests
+    • Today's Attendance
+    • Absent Employees
+    • Payroll Pending
+Charts:
+    • Employees by Department
+    • Employee Status
+    • Attendance Summary
+    • Leave Statistics
+    • Monthly Employee Joining
+    • Payroll Summary
+All dashboard values must be calculated from actual SQLite database records.
+
+17. HR DASHBOARD
+Create an HR dashboard.
+Show:
+    • Total employees
+    • New employees
+    • Active employees
+    • Employees on leave
+    • Pending leave requests
+    • Today's attendance
+    • Departments
+    • Upcoming joining dates
+Add charts for:
+    • Department distribution
+    • Attendance
+    • Leave statistics
+    • Employee growth
+
+18. SEARCH FUNCTIONALITY
+Implement backend-supported search.
+Employee search should support:
+    • Employee ID
+    • Employee Name
+    • Email
+    • Phone
+    • Department
+    • Job Position
+Example:
+Search:
+EMP1001
+should return the matching employee.
+Search:
+Software
+should return employees whose job position or related field matches.
+Do not implement search only on hard-coded frontend data.
+
+19. FILTER FUNCTIONALITY
+Implement filters for:
+    • Department
+    • Job Position
+    • Employee Status
+    • Employment Type
+    • Gender
+    • Joining Date
+    • Attendance Status
+    • Leave Status
+    • Payroll Status
+Filters should interact with backend API parameters where appropriate.
+
+20. NOTIFICATION SYSTEM
+Implement an in-app notification system.
+Notification examples:
+New Employee Added
+? HR/Admin notification
+Leave Applied
+? Manager/HR notification
+Leave Approved
+? Employee notification
+Leave Rejected
+? Employee notification
+Payroll Processed
+? Employee notification
+Performance Review Added
+? Employee notification
+Notification fields:
+    • Notification ID
+    • Recipient
+    • Title
+    • Message
+    • Read/Unread
+    • Created Date
+Provide:
+    • Notification icon
+    • Notification count
+    • Notification dropdown/page
+    • Mark as read
+
+21. REST API ENDPOINTS
+Create clean REST APIs.
+Authentication
+POST /api/auth/login/
+POST /api/auth/logout/
+GET /api/auth/profile/
+Employees
+GET /api/employees/
+POST /api/employees/
+GET /api/employees/{id}/
+PATCH /api/employees/{id}/
+DELETE /api/employees/{id}/
+Departments
+GET /api/departments/
+POST /api/departments/
+GET /api/departments/{id}/
+PATCH /api/departments/{id}/
+DELETE /api/departments/{id}/
+Positions
+GET /api/positions/
+POST /api/positions/
+PATCH /api/positions/{id}/
+DELETE /api/positions/{id}/
+Attendance
+GET /api/attendance/
+POST /api/attendance/
+PATCH /api/attendance/{id}/
+DELETE /api/attendance/{id}/
+Leave
+GET /api/leaves/
+POST /api/leaves/
+GET /api/leaves/{id}/
+PATCH /api/leaves/{id}/
+DELETE /api/leaves/{id}/
+Payroll
+GET /api/payroll/
+POST /api/payroll/
+GET /api/payroll/{id}/
+PATCH /api/payroll/{id}/
+DELETE /api/payroll/{id}/
+Performance
+GET /api/performance/
+POST /api/performance/
+GET /api/performance/{id}/
+PATCH /api/performance/{id}/
+DELETE /api/performance/{id}/
+Notifications
+GET /api/notifications/
+PATCH /api/notifications/{id}/read/
+Dashboard
+GET /api/dashboard/
+Reports
+GET /api/reports/
+Use appropriate HTTP status codes:
+    • 200 OK
+    • 201 Created
+    • 204 No Content
+    • 400 Bad Request
+    • 401 Unauthorized
+    • 403 Forbidden
+    • 404 Not Found
+    • 500 Internal Server Error
+
+22. DATABASE DESIGN
+Create proper Django models.
+Recommended models:
+    • User
+    • Employee
+    • Department
+    • JobPosition
+    • Attendance
+    • LeaveRequest
+    • LeaveBalance
+    • Payroll
+    • Payslip
+    • PerformanceReview
+    • Notification
+Use:
+    • Primary keys
+    • Foreign keys
+    • Unique constraints
+    • Required fields
+    • Choices
+    • Created timestamps
+    • Updated timestamps
+    • Database indexes where useful
+Relationships:
+User
+?
+Employee
+?
+Department
+?
+Job Position
+?
+Attendance
+?
+Leave
+?
+Payroll
+?
+Performance
+
+23. DATABASE CONSTRAINTS
+Implement appropriate constraints.
+Examples:
+    • Employee ID must be unique
+    • Employee email should be unique
+    • Department code should be unique
+    • Attendance should not duplicate employee/date
+    • Salary cannot be negative
+    • Leave end date cannot be before start date
+    • Required fields cannot be empty
+Use Django model constraints and serializer validation.
+
+24. FRONTEND UI DESIGN
+Create a modern professional HR management interface.
+Use:
+    • Sidebar
+    • Top navigation bar
+    • Dashboard cards
+    • Data tables
+    • Forms
+    • Modal dialogs
+    • Search bar
+    • Filter controls
+    • Status badges
+    • Notification panel
+    • Profile menu
+    • Breadcrumbs
+    • Loading indicators
+    • Empty states
+    • Error states
+    • Confirmation dialogs
+Design style:
+    • Modern corporate UI
+    • Clean layout
+    • Professional typography
+    • White/light background
+    • Navy/blue accent colors
+    • Rounded cards
+    • Subtle shadows
+    • Consistent spacing
+    • Responsive design
+Do not make it childish.
+Do not use excessive animations.
+
+25. RESPONSIVE DESIGN
+The application must work on:
+    • Desktop
+    • Laptop
+    • Tablet
+    • Mobile
+The sidebar should become responsive on smaller screens.
+Tables should support horizontal scrolling or responsive layouts.
+Forms should adapt to mobile screens.
+Dashboard cards should automatically resize.
+
+26. LOGIN PAGE
+Create a professional login page.
+Include:
+    • Employee Management System logo/title
+    • Email/username
+    • Password
+    • Show/hide password
+    • Login button
+    • Loading state
+    • Validation
+    • Error message
+After successful login:
+Admin ? Admin Dashboard
+HR ? HR Dashboard
+Manager ? Manager Dashboard
+Payroll Officer ? Payroll Dashboard
+Employee ? Employee Dashboard
+
+27. FORM VALIDATION
+Implement both frontend and backend validation.
+Validate:
+    • Required fields
+    • Email format
+    • Phone number
+    • Employee ID
+    • Salary
+    • Date of birth
+    • Joining date
+    • Leave dates
+    • Duplicate employee ID
+    • Duplicate email
+    • Duplicate attendance
+    • Invalid department
+    • Invalid position
+    • Invalid salary
+Display clear validation messages.
+Example:
+Email is required
+Enter a valid email address
+Salary cannot be negative
+Employee ID already exists
+End date cannot be before start date
+
+28. ERROR HANDLING
+Implement proper error handling.
+Handle:
+    • Invalid ID
+    • Employee not found
+    • Duplicate employee
+    • Unauthorized access
+    • Forbidden access
+    • Invalid request
+    • Database error
+    • Network error
+    • Server error
+    • Validation error
+Frontend should display user-friendly messages.
+Do not expose sensitive backend errors to normal users.
+
+29. LOADING AND EMPTY STATES
+Every API-driven page should have:
+Loading state
+Display:
+“Loading employees...”
+while data is being retrieved.
+Empty state
+If no employees exist:
+“No employees found.”
+Provide an appropriate action such as:
+“Add Employee”
+Error state
+If API fails:
+“Unable to load employee data. Please try again.”
+
+30. PROJECT STRUCTURE
+Create this structure:
+employee-management-system/
+?
+??? frontend/
+?   ??? src/
+?   ?   ??? components/
+?   ?   ?   ??? Navbar.jsx
+?   ?   ?   ??? Sidebar.jsx
+?   ?   ?   ??? EmployeeForm.jsx
+?   ?   ?   ??? EmployeeTable.jsx
+?   ?   ?   ??? EmployeeCard.jsx
+?   ?   ?   ??? SearchBar.jsx
+?   ?   ?   ??? ConfirmDialog.jsx
+?   ?   ?
+?   ?   ??? pages/
+?   ?   ?   ??? Login.jsx
+?   ?   ?   ??? AdminDashboard.jsx
+?   ?   ?   ??? HRDashboard.jsx
+?   ?   ?   ??? EmployeeDashboard.jsx
+?   ?   ?   ??? Employees.jsx
+?   ?   ?   ??? EmployeeDetails.jsx
+?   ?   ?   ??? Departments.jsx
+?   ?   ?   ??? Positions.jsx
+?   ?   ?   ??? Attendance.jsx
+?   ?   ?   ??? LeaveManagement.jsx
+?   ?   ?   ??? Payroll.jsx
+?   ?   ?   ??? Payslips.jsx
+?   ?   ?   ??? Performance.jsx
+?   ?   ?   ??? Reports.jsx
+?   ?   ?   ??? Notifications.jsx
+?   ?   ?
+?   ?   ??? services/
+?   ?   ?   ??? api.js
+?   ?   ?   ??? employeeService.js
+?   ?   ?   ??? departmentService.js
+?   ?   ?   ??? attendanceService.js
+?   ?   ?   ??? leaveService.js
+?   ?   ?   ??? payrollService.js
+?   ?   ?
+?   ?   ??? context/
+?   ?   ?   ??? AuthContext.jsx
+?   ?   ?
+?   ?   ??? hooks/
+?   ?   ??? utils/
+?   ?   ??? assets/
+?   ?   ??? App.jsx
+?   ?   ??? main.jsx
+?   ?
+?   ??? package.json
+?   ??? README.md
+?
+??? backend/
+?   ??? manage.py
+?   ??? config/
+?   ??? users/
+?   ??? employees/
+?   ??? departments/
+?   ??? attendance/
+?   ??? leaves/
+?   ??? payroll/
+?   ??? performance/
+?   ??? notifications/
+?   ??? db.sqlite3
+?   ??? requirements.txt
+?   ??? README.md
+?
+??? docs/
+?   ??? architecture/
+?   ??? database/
+?   ??? api/
+?   ??? screenshots/
+?   ??? testing/
+?
+??? postman/
+?   ??? employee-management.postman_collection.json
+?
+??? .env.example
+??? .gitignore
+??? README.md
+
+31. API INTEGRATION
+Create a centralized API service.
+For example:
+const API_BASE_URL = "http://localhost:8000/api";
+Use Axios or Fetch.
+All frontend data must come from REST APIs.
+Example:
+Employee Page
+      ?
+employeeService.js
+      ?
+GET /api/employees/
+      ?
+Django REST Framework
+      ?
+SQLite
+      ?
+JSON
+      ?
+React Table
+
+32. CRUD TESTING
+Test every CRUD operation.
+CREATE TEST
+Input valid employee data.
+Expected:
+    • HTTP 201
+    • Database record created
+    • Employee displayed in UI
+READ TEST
+Open employee list.
+Expected:
+    • HTTP 200
+    • Employees displayed
+UPDATE TEST
+Edit employee.
+Expected:
+    • HTTP 200
+    • Database updated
+    • UI updated
+DELETE TEST
+Delete employee.
+Expected:
+    • HTTP 204
+    • Database record removed
+    • UI refreshed
+Also test:
+    • Empty input
+    • Invalid email
+    • Duplicate employee ID
+    • Invalid ID
+    • Unauthorized user
+
+33. POSTMAN TESTING
+Prepare Postman requests for:
+    1. Login
+    2. Get employees
+    3. Create employee
+    4. Get employee by ID
+    5. Update employee
+    6. Delete employee
+    7. Get departments
+    8. Create department
+    9. Update department
+    10. Delete department
+    11. Create attendance
+    12. Apply leave
+    13. Approve leave
+    14. Reject leave
+    15. Create payroll
+    16. Update payroll
+    17. Create performance record
+    18. Get notifications
+    19. Dashboard
+    20. Reports
+Create a Postman collection.
+
+34. DEMO DATA
+Create optional seed/demo data.
+Use fictional information only.
+Example:
+Employee:
+EMP1001 — Arun Kumar — IT — Software Developer
+Employee:
+EMP1002 — Priya Devi — HR — HR Executive
+Employee:
+EMP1003 — Karthik Raj — Finance — Accountant
+Create sample:
+    • Departments
+    • Positions
+    • Employees
+    • Attendance
+    • Leave requests
+    • Payroll
+    • Performance records
+Do not use real personal information.
+
+35. REPORTS
+Create a Reports page.
+Reports:
+    • Total employees
+    • Employees by department
+    • Employees by status
+    • Attendance summary
+    • Leave summary
+    • Monthly joining report
+    • Payroll summary
+    • Performance summary
+Use charts and tables.
+Provide CSV export where practical.
+All reports must use actual database data.
+
+36. SECURITY
+Implement:
+    • Secure password hashing
+    • Authentication
+    • Authorization
+    • Role-based permissions
+    • Backend validation
+    • CSRF protection where applicable
+    • Correct CORS configuration
+    • Environment variables
+    • No hard-coded passwords
+    • No hard-coded secret keys
+    • No sensitive data in Git
+    • Safe API error responses
+Users must not be able to access resources outside their permissions.
+
+37. README DOCUMENTATION
+Create a complete README containing:
+Project Title
+Employee Management System
+Overview
+Explain the purpose of the system.
+Problem Statement
+Explain the problems of manually managing employee records.
+Objectives
+List the project objectives.
+Features
+Explain all major features.
+User Roles
+Explain permissions.
+Technology Stack
+Explain frontend, backend, database, API.
+Architecture
+Explain:
+React ? REST API ? Django ? SQLite
+Database Design
+Explain all models.
+ER Diagram
+Create an ER diagram.
+API Documentation
+List all API endpoints.
+CRUD Operations
+Explain Create, Read, Update, Delete.
+Installation
+Explain how to install dependencies.
+Running Backend
+Explain Django commands.
+Running Frontend
+Explain React commands.
+Testing
+Explain Postman testing.
+Screenshots
+Add application screenshots.
+Future Enhancements
+Suggest future features.
+
+38. GIT/GITHUB PREPARATION
+Create:
+.gitignore
+Exclude:
+    • .env
+    • venv/
+    • node_modules/
+    • __pycache__/
+    • build files
+    • secrets
+    • unnecessary temporary files
+Use meaningful Git commits such as:
+Initial project setup
+Create employee model
+Implement employee CRUD API
+Build employee dashboard
+Add authentication
+Add attendance module
+Add leave management
+Add payroll module
+Add validation
+Add API testing
+Complete documentation
+
+39. SOP COMPLIANCE
+The completed project must satisfy the academic SOP requirements:
+? Requirement analysis
+? Project planning
+? Database design
+? Primary and foreign keys
+? ER diagram
+? System architecture
+? Responsive frontend
+? Backend development
+? REST API
+? CRUD operations
+? Database integration
+? Frontend-backend integration
+? Client-side validation
+? Server-side validation
+? Exception handling
+? Search
+? Filtering
+? Authentication
+? Authorization
+? API testing
+? Database verification
+? Git/GitHub readiness
+? Documentation
+? Screenshots
+? Testing results
+? Final demonstration
+
+40. IMPORTANT DEVELOPMENT RULES
+DO NOT create a fake application.
+DO NOT use static employee arrays as the main data source.
+DO NOT use localStorage as the database.
+DO NOT create buttons that do nothing.
+Every important button must perform a real operation.
+For example:
+ADD EMPLOYEE
+React Form
+? POST API
+? Serializer
+? Django ORM
+? SQLite
+? Response
+? UI Refresh
+EDIT EMPLOYEE
+React Form
+? PATCH API
+? Django
+? SQLite
+? Response
+? Updated UI
+DELETE EMPLOYEE
+Delete Button
+? Confirmation
+? DELETE API
+? SQLite
+? Response
+? Remove from UI
+APPLY LEAVE
+Leave Form
+? POST API
+? SQLite
+? Notification
+? Employee UI update
+APPROVE LEAVE
+Approve Button
+? PATCH API
+? SQLite
+? Employee notification
+? Leave status updated
+CREATE PAYROLL
+Payroll Form
+? POST API
+? Salary calculation
+? SQLite
+? Payslip
+MARK ATTENDANCE
+Attendance Form
+? POST API
+? SQLite
+? Attendance dashboard update
+
+41. FINAL QUALITY CHECK
+Before declaring the application complete, verify:
+    1. Backend starts without errors.
+    2. Frontend starts without errors.
+    3. SQLite database works.
+    4. Migrations work.
+    5. Login works.
+    6. Role-based access works.
+    7. Employee CREATE works.
+    8. Employee READ works.
+    9. Employee UPDATE works.
+    10. Employee DELETE works.
+    11. Department CRUD works.
+    12. Position CRUD works.
+    13. Attendance works.
+    14. Leave application works.
+    15. Leave approval works.
+    16. Payroll works.
+    17. Payslip works.
+    18. Performance management works.
+    19. Notifications work.
+    20. Search works.
+    21. Filters work.
+    22. Dashboard statistics are correct.
+    23. Reports use real database data.
+    24. Postman APIs work.
+    25. Invalid inputs are rejected.
+    26. Unauthorized users are blocked.
+    27. Mobile responsive layout works.
+    28. Database values are verified after CRUD operations.
+    29. README is complete.
+    30. Project is ready for academic demonstration.
+
+42. FINAL OUTPUT REQUIRED FROM ANTIGRAVITY
+After building the application, provide:
+    1. Complete frontend source code
+    2. Complete backend source code
+    3. SQLite database setup
+    4. Django migrations
+    5. REST API endpoints
+    6. Authentication
+    7. Role-based authorization
+    8. Employee CRUD
+    9. Department CRUD
+    10. Position CRUD
+    11. Attendance management
+    12. Leave management
+    13. Payroll management
+    14. Payslip management
+    15. Performance management
+    16. Notification system
+    17. Search and filters
+    18. Dashboard
+    19. Reports
+    20. Validation
+    21. Error handling
+    22. Postman collection
+    23. README
+    24. ER diagram
+    25. Architecture diagram
+    26. Testing documentation
+The final application must be a fully functional Employee Management System, not a UI-only prototype.
+The project must clearly demonstrate:
+CREATE ? READ ? UPDATE ? DELETE
+and the complete data flow:
+React ? REST API ? Django REST Framework ? Django ORM ? SQLite
+Make the application professional, responsive, database-driven, secure, easy to demonstrate, and suitable for an academic CRUD project evaluation.
+
