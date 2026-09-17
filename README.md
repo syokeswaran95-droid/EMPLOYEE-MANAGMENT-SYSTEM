@@ -1,6 +1,8 @@
 # Employee Management System
 
-🔗 **GitHub Repository Link**: [https://github.com/syokeswaran95-droid/EMPLOYEE-MANAGMENT-SYSTEM.git](https://github.com/syokeswaran95-droid/EMPLOYEE-MANAGMENT-SYSTEM.git)
+🌐 **Live Web Application Link**: [https://syokeswaran95-droid.github.io/EMPLOYEE-MANAGMENT-SYSTEM/](https://syokeswaran95-droid.github.io/EMPLOYEE-MANAGMENT-SYSTEM/)
+
+🔗 **GitHub Repository**: [https://github.com/syokeswaran95-droid/EMPLOYEE-MANAGMENT-SYSTEM](https://github.com/syokeswaran95-droid/EMPLOYEE-MANAGMENT-SYSTEM)
 
 ---
 
