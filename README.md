@@ -1,5 +1,9 @@
 # Employee Management System
 
+🔗 **GitHub Repository Link**: [https://github.com/syokeswaran95-droid/EMPLOYEE-MANAGMENT-SYSTEM.git](https://github.com/syokeswaran95-droid/EMPLOYEE-MANAGMENT-SYSTEM.git)
+
+---
+
 ## Project Overview
 The **Employee Management System (EMS)** is a full-stack academic web application designed to digitize human resource management, employee record tracking, attendance logs, leave management workflows, salary payroll processing, performance reviews, and operational reporting.
 
